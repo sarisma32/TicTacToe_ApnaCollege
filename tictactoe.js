@@ -5,6 +5,8 @@ let messageContainer=document.querySelector(".message-container");
 let message=document.getElementById("msg");
 
 let turnX=true;
+let count=0;
+let winnerFound =false;
 
 const winningPattern=[
     [0,1,2],
@@ -32,6 +34,7 @@ const enableButton=()=>{
 
 const reset =()=>{
     turnX=true;
+    count =0;
     enableButton();
     messageContainer.classList.add("hide");
 }
@@ -41,6 +44,8 @@ boxes.forEach((val)=>{
     // console.log(val);
     val.addEventListener("click",()=>{
         console.log("Box was clicked");
+        count++;
+        console.log(count);
 
         if(turnX===true){
             val.innerText="X";
@@ -54,6 +59,14 @@ boxes.forEach((val)=>{
         checkWinner();
     });
 })
+
+
+const showDraw=()=>{
+    msg.innerText="It's a Draw";
+    messageContainer.classList.remove("hide");
+    disableButton();
+}
+
 
 
 const showWinner=(winner)=>{
@@ -72,9 +85,13 @@ const checkWinner=()=>{
             if(pos1Val === pos2Val && pos2Val === pos3Val){
                 console.log("winner",pos1Val);
                 showWinner(pos1Val);
+                break;
             }
         }
-    }    
+    }   
+    if (!winnerFound && count ===9){
+        showDraw();
+    } 
 }
 
 
